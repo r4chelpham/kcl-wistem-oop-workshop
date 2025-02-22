@@ -5,6 +5,8 @@ class Item:
     def __init__(self, name, price, quantity):
         self.name = name
         self.price = price
+        if quantity < 0:
+            raise ValueError("Cannot have negative item quantity")
         self.quantity = quantity
 
     def reduce_quantity(self):
@@ -13,6 +15,14 @@ class Item:
         else:
             raise ValueError(f"{self.name} is out of stock!")
 
+    # DO NOT CHANGE BELOW ****
+    def __eq__(self, other):
+        if isinstance(other, Item):
+            return self.name.lower() == other.name.lower()
+        return False
+    # DO NOT CHANGE ABOVE ****
+    
+
 class VendingMachine:
     """
     Represents a vending machine.
@@ -20,11 +30,16 @@ class VendingMachine:
     def __init__(self):
         self.items = {}
         self.balance = 0.0
+        self.max_quantity = 10
 
     def add_item(self, item, slot):
         """Adds an item to a specific slot in the vending machine."""
         if slot in self.items:
             raise ValueError(f"Slot {slot} is already occupied!")
+
+        if item.quantity > self.max_quantity:
+            raise ValueError(f"{item.name} quantity is too large")
+            
         self.items[slot] = item
 
     def display_items(self):
@@ -61,6 +76,28 @@ class VendingMachine:
         """Refunds the remaining balance."""
         print(f"Refunding £{self.balance:.2f}")
         self.balance = 0.0
+
+    def restock_item(self, item, slot):
+        # Assuming we can only restock items that was already in the slot before
+        if slot not in self.items:
+            raise ValueError(f"{slot} doesn't exist yet -- add the item into the slot first")
+
+        if self.items[slot] != item:
+            raise ValueError(f"{item.name} is not stocked at {slot}")
+
+        new_quantity = self.items[slot].quantity + item.quantity
+        
+        if new_quantity > self.max_quantity:
+            raise ValueError(f"Tried to add too many {item.name}s to {slot}")
+
+        item.quantity = new_quantity
+        self.items[slot] = item
+
+    def dispense_items(self, items):
+        # Assuming we are dispensing all valid items. 
+        # Further challenge task: can you come up with your own error checking mechanism?
+        for item in items:
+            self.dispense_item(item)
 
 # Demonstration of the vending machine
 if __name__ == "__main__":

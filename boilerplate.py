@@ -18,17 +18,23 @@ class Item:
     def __init__(self, name, price, quantity):
         self.name = name
         self.price = price
+        if quantity < 0:
+            raise ValueError("Cannot have negative item quantity")
         self.quantity = quantity
-        # TODO: add extra attributes of the item
-  
+
     def reduce_quantity(self):
         if self.quantity > 0:
-          # TODO: what should you put here to decrease the quantity?
-          # CODE STARTS HERE
-            pass
-          # CODE STOPS HERE
+            self.quantity -= 1
         else:
             raise ValueError(f"{self.name} is out of stock!")
+
+    # DO NOT CHANGE BELOW ****
+    def __eq__(self, other):
+        if isinstance(other, Item):
+            return self.name.lower() == other.name.lower()
+        return False
+    # DO NOT CHANGE ABOVE ****
+    
 
 class VendingMachine:
     """

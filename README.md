@@ -14,7 +14,7 @@ If you want to learn more about different structures and Python syntax details, 
 
 ### How can I check if my answer is right?
 1. Go to the `tests` directory
-2. If you're working on the base tasks, select the `base-tests.py` file, otherwise, select the `challenge-tasks.py` file
+2. If you're working on the base tasks, select the `base-tests.py` file, otherwise, select the `challenge-tests.py` file
 3. On [OnlinePython](https://www.online-python.com/), open another tab by clicking the "Plus" button
 ![image](https://github.com/user-attachments/assets/3d8893f3-baa5-424e-8a45-a036869758db)
 4. Copy and paste the test code into the new tab
